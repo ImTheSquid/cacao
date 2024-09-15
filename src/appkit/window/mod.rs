@@ -20,6 +20,7 @@ use objc::{class, msg_send, msg_send_id, sel};
 use crate::appkit::toolbar::{Toolbar, ToolbarDelegate};
 use crate::color::Color;
 use crate::foundation::{id, nil, to_bool, NSInteger, NSString, NSUInteger, NO, YES};
+use crate::geometry::Rect;
 use crate::layout::Layout;
 use crate::objc_access::ObjcAccess;
 use crate::utils::{os, Controller};
@@ -334,6 +335,49 @@ impl<T> Window<T> {
             let _: () = msg_send![&*self.objc, setShowsToolbarButton:match shows {
                 true => YES,
                 false => NO
+            }];
+        }
+    }
+
+    pub fn set_scale(&self, rect: Rect) {
+        let rect: CGRect = rect.into();
+        unsafe {
+            let _: () = msg_send![&*self.objc, setFrame:rect display:YES];
+        }
+    }
+
+    pub fn set_ignores_mouse_events(&self, ignore: bool) {
+        unsafe {
+            let _: () = msg_send![&*self.objc, setIgnoresMouseEvents:match ignore {
+                true => YES,
+                false => NO,
+            }];
+        }
+    }
+
+    pub fn set_accepts_mouse_moved_events(&self, accept: bool) {
+        unsafe {
+            let _: () = msg_send![&*self.objc, setAcceptsMouseMovedEvents:match accept {
+                true => YES,
+                false => NO,
+            }];
+        }
+    }
+
+    pub fn set_is_visible(&self, visible: bool) {
+        unsafe {
+            let _: () = msg_send![&*self.objc, setIsVisible:match visible {
+                true => YES,
+                false => NO,
+            }];
+        }
+    }
+
+    pub fn set_has_shadow(&self, shadow: bool) {
+        unsafe {
+            let _: () = msg_send![&*self.objc, setHasShadow:match shadow {
+                true => YES,
+                false => NO,
             }];
         }
     }
