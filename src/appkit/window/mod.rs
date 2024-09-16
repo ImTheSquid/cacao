@@ -339,13 +339,16 @@ impl<T> Window<T> {
         }
     }
 
-    pub fn set_scale(&self, rect: Rect) {
+    /// Sets the origin and size of the window’s frame rectangle according to a given frame rectangle,
+    /// thereby setting its position and size onscreen.
+    pub fn set_frame(&self, rect: Rect) {
         let rect: CGRect = rect.into();
         unsafe {
             let _: () = msg_send![&*self.objc, setFrame:rect display:YES];
         }
     }
 
+    /// Sets whether the window is transparent to mouse events.
     pub fn set_ignores_mouse_events(&self, ignore: bool) {
         unsafe {
             let _: () = msg_send![&*self.objc, setIgnoresMouseEvents:match ignore {
@@ -355,6 +358,7 @@ impl<T> Window<T> {
         }
     }
 
+    /// Sets whether the window accepts mouse-moved events.
     pub fn set_accepts_mouse_moved_events(&self, accept: bool) {
         unsafe {
             let _: () = msg_send![&*self.objc, setAcceptsMouseMovedEvents:match accept {
@@ -364,6 +368,7 @@ impl<T> Window<T> {
         }
     }
 
+    /// Sets the window’s visible state to the value you specify.
     pub fn set_is_visible(&self, visible: bool) {
         unsafe {
             let _: () = msg_send![&*self.objc, setIsVisible:match visible {
@@ -373,6 +378,7 @@ impl<T> Window<T> {
         }
     }
 
+    /// Sets whether the window has a shadow.
     pub fn set_has_shadow(&self, shadow: bool) {
         unsafe {
             let _: () = msg_send![&*self.objc, setHasShadow:match shadow {

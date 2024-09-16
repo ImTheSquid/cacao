@@ -224,6 +224,7 @@ impl App {
         });
     }
 
+    /// Sends an update() message to each onscreen window.
     pub fn update_windows() {
         shared_application(|app| unsafe {
             let _: () = msg_send![app, updateWindows];
